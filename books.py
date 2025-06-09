@@ -60,6 +60,14 @@ BOOKS = [
 def books():
     return BOOKS
 
+
+@app.get("/book/{book_title}")
+def read_book(book_title:str):
+    for book in BOOKS:
+        if book.get('title').casefold() == book_title.casefold():
+            return book
+ 
+
 @app.get("/book/{dynamic_param}")
-def read_all_books(dynamic_param):
+def read_all_books(dynamic_param:str):
     return {"my dynamic params": dynamic_param}
