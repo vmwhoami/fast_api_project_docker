@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import Body, FastAPI
 
 app = FastAPI()
 
@@ -96,4 +96,23 @@ async def read_author_caregory_by_querry( book_author: str, category: str):
             
     return books_to_return
  
+ ##### POST REQUESTS have a body
  
+@app.post("/books/create_book")
+async def create_new_book(new_book=Body()):
+        BOOKS.append(new_book)
+        
+###### PUT/ UPDATE request
+@app.put("/books/update_book")
+async def update_book(updated_book=Body()):
+    for b in range(len(BOOKS)):
+        if BOOKS[b].get("title").casefold() == updated_book.get("title").casefold():
+             BOOKS[b] = updated_book
+             
+###### DELETE request
+@app.delete("/books/delete_book/{book_title}")
+async def delete_book(delete_book=Body()):
+    for b in range(len(BOOKS)):
+        if BOOKS[b].get("title").casefold() == delete_book.get("title").casefold():
+            BOOKS.pop(b)
+            break
