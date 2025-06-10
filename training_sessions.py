@@ -62,6 +62,14 @@ def training_sessions_by_id(training_sersion_id: int):
     for training in TRAINING_SESSIONS:
         if training.id == training_sersion_id:
             return training
+        
+@app.get("/training_sessions/")
+def training_by_name(name: str):
+    training_to_return = []
+    for training in TRAINING_SESSIONS:
+        if training.name == name:
+            training_to_return.append(training)
+        return training_to_return
     
 
 @app.post("/training_sessions/create_session")
