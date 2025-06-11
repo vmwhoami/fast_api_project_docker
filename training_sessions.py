@@ -1,3 +1,4 @@
+from datetime import datetime
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 
@@ -9,6 +10,7 @@ class Training:
     reps: int  
     weight: float  
     notes: str
+    session_date: datetime
 
     def __init__(self, id,name, sets, reps, weight, notes):
         self.id = id
@@ -17,6 +19,7 @@ class Training:
         self.reps = reps
         self.weight = weight
         self.notes = notes
+        session_date: datetime
         
 class TrainingRequest(BaseModel):
     id: int
@@ -25,6 +28,7 @@ class TrainingRequest(BaseModel):
     reps: int
     weight: float
     notes: str=Field(min_length=5)
+    session_date: datetime
     
     model_config={
         "json_schema_extra":{
@@ -34,13 +38,14 @@ class TrainingRequest(BaseModel):
                 "sets": 2,
                 "reps": 2,
                 "weight": 10,
-                "notes": "Some notes about the sesion"
+                "notes": "Some notes about the sesion",
+                "session_date": ""
             }
         }
     }
 
 TRAINING_SESSIONS = [
-    Training(1, "Lat Pulldown", 3, 2, 89.52, "pull down"),
+    Training(1, "Lat Pulldown", 3, 2, 89.52, "pull down", "!!!!!!!!date"),
     Training(2, "Bench Press", 4, 3, 102.34, "push"),
     Training(3, "Deadlift", 3, 2, 140.25, "lift"),
     Training(4, "Squat", 5, 3, 120.78, "lower"),
